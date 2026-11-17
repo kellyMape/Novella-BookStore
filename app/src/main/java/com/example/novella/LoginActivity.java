@@ -18,13 +18,18 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import android.util.Patterns;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity {
 
     EditText emailEditText, passwordEditText;
-    Button loginbtn, registerLogin;
+    Button loginbtn, registerLogin, forgotbtn;
+
+
 
     FirebaseAuth firebaseAuth;
+    FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +42,10 @@ public class LoginActivity extends AppCompatActivity {
 
         loginbtn = findViewById(R.id.loginbtn);
         registerLogin = findViewById(R.id.regbtn);
+        forgotbtn = findViewById(R.id.forgotbtn);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         registerLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +62,43 @@ public class LoginActivity extends AppCompatActivity {
                 loginUSer();
             }
         });
+
+        forgotbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resetPassword();
+            }
+        });
+    }
+
+    private void resetPassword() {
+
+        String email = emailEditText.getText().toString().trim();
+
+        if (TextUtils.isEmpty(email)) {
+            emailEditText.setError("Please enter your email");
+            emailEditText.requestFocus();
+            return;
+        }
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            emailEditText.setError("Invalid email");
+            emailEditText.requestFocus();
+            return;
+        }
+
+        firebaseAuth.sendPasswordResetEmail(email)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(LoginActivity.this,
+                                "If your account exists, check your email",
+                                Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(LoginActivity.this,
+                                "Unable to reset password",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void loginUSer() {
@@ -75,15 +119,69 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this,
                                     "login success", Toast.LENGTH_SHORT).show();
 
-                            startActivity(new Intent(LoginActivity.this,
-                                    MainActivity.class));
-                            finish();
+                            FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                            if (user != null) {
+                                checkUserRole(user.getUid());
+                            }
 
                         } else {
                             Toast.makeText(LoginActivity.this,
                                     "Login failed", Toast.LENGTH_SHORT).show();
                         }
                     }
+                });
+    }
+
+    private void checkUserRole(String uid) {
+
+        db.collection("users").document(uid).get()
+                .addOnSuccessListener(document -> {
+
+                    if (document.exists()) {
+
+                        String role = document.getString("role");
+
+                        if ("admin".equals(role)) {
+
+                            startActivity(new Intent(
+                                    LoginActivity.this,
+                                    AdminActivity.class));
+                            finish();
+
+                        } else if ("customer".equals(role)) {
+
+                            startActivity(new Intent(
+                                    LoginActivity.this,
+                                    MainActivity.class));
+                            finish();
+
+                        } else {
+
+                            firebaseAuth.signOut();
+
+                            Toast.makeText(this,
+                                    "Invalid user role",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                    } else {
+
+                        firebaseAuth.signOut();
+
+                        Toast.makeText(this,
+                                "User profile not found",
+                                Toast.LENGTH_SHORT).show();
+                    }
+
+                })
+                .addOnFailureListener(e -> {
+
+                    firebaseAuth.signOut();
+
+                    Toast.makeText(this,
+                            "Error loading user role",
+                            Toast.LENGTH_SHORT).show();
                 });
     }
 
@@ -94,9 +192,9 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
         if (currentUser != null) {
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
+            checkUserRole(currentUser.getUid());
         }
     }
+
+
 }
