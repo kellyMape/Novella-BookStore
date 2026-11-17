@@ -18,11 +18,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import android.util.Patterns;
 
 public class LoginActivity extends AppCompatActivity {
 
     EditText emailEditText, passwordEditText;
-    Button loginbtn, registerLogin;
+    Button loginbtn, registerLogin, forgotbtn;
+
+
 
     FirebaseAuth firebaseAuth;
 
@@ -37,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
 
         loginbtn = findViewById(R.id.loginbtn);
         registerLogin = findViewById(R.id.regbtn);
+        forgotbtn = findViewById(R.id.forgotbtn);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -55,6 +59,43 @@ public class LoginActivity extends AppCompatActivity {
                 loginUSer();
             }
         });
+
+        forgotbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resetPassword();
+            }
+        });
+    }
+
+    private void resetPassword() {
+
+        String email = emailEditText.getText().toString().trim();
+
+        if (TextUtils.isEmpty(email)) {
+            emailEditText.setError("Please enter your email");
+            emailEditText.requestFocus();
+            return;
+        }
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            emailEditText.setError("Invalid email");
+            emailEditText.requestFocus();
+            return;
+        }
+
+        firebaseAuth.sendPasswordResetEmail(email)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(LoginActivity.this,
+                                "If your account exists, check your email",
+                                Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(LoginActivity.this,
+                                "Unable to reset password",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void loginUSer() {

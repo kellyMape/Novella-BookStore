@@ -8,6 +8,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:padding="24dp"
+    android:background="@color/white"
     tools:context=".LoginActivity">
 
 
@@ -64,4 +65,14 @@
         android:layout_marginBottom="16dp"
        />
 
+    <Button
+        android:id="@+id/forgotbtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Forgot Password?"
+        android:textColor="@color/green"
+        android:backgroundTint="@color/white"
+        android:paddingVertical="12dp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp" />
 </LinearLayout>
