@@ -19,6 +19,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import android.util.Patterns;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -28,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     FirebaseAuth firebaseAuth;
+    FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         forgotbtn = findViewById(R.id.forgotbtn);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         registerLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,15 +119,69 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this,
                                     "login success", Toast.LENGTH_SHORT).show();
 
-                            startActivity(new Intent(LoginActivity.this,
-                                    MainActivity.class));
-                            finish();
+                            FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                            if (user != null) {
+                                checkUserRole(user.getUid());
+                            }
 
                         } else {
                             Toast.makeText(LoginActivity.this,
                                     "Login failed", Toast.LENGTH_SHORT).show();
                         }
                     }
+                });
+    }
+
+    private void checkUserRole(String uid) {
+
+        db.collection("users").document(uid).get()
+                .addOnSuccessListener(document -> {
+
+                    if (document.exists()) {
+
+                        String role = document.getString("role");
+
+                        if ("admin".equals(role)) {
+
+                            startActivity(new Intent(
+                                    LoginActivity.this,
+                                    AdminActivity.class));
+                            finish();
+
+                        } else if ("customer".equals(role)) {
+
+                            startActivity(new Intent(
+                                    LoginActivity.this,
+                                    MainActivity.class));
+                            finish();
+
+                        } else {
+
+                            firebaseAuth.signOut();
+
+                            Toast.makeText(this,
+                                    "Invalid user role",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                    } else {
+
+                        firebaseAuth.signOut();
+
+                        Toast.makeText(this,
+                                "User profile not found",
+                                Toast.LENGTH_SHORT).show();
+                    }
+
+                })
+                .addOnFailureListener(e -> {
+
+                    firebaseAuth.signOut();
+
+                    Toast.makeText(this,
+                            "Error loading user role",
+                            Toast.LENGTH_SHORT).show();
                 });
     }
 
@@ -135,9 +192,9 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
         if (currentUser != null) {
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
+            checkUserRole(currentUser.getUid());
         }
     }
+
+
 }
