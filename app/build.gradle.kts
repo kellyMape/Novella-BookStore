@@ -39,6 +39,8 @@ dependencies {
     implementation(libs.credentials)
     implementation(libs.credentials.play.services.auth)
     implementation(libs.firebase.auth)
+    implementation(libs.firebase.database)
+    implementation(libs.firebase.storage)
     implementation(libs.googleid)
     implementation(libs.material)
     testImplementation(libs.junit)
