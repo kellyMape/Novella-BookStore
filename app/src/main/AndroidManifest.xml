@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Novella">
         <activity
-            android:name=".MainActivity"
+            android:name=".AddBookActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
@@ -27,6 +27,10 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".LoginActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".MainActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
     </application>
