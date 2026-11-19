@@ -5,23 +5,26 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:padding="24dp">
+    android:padding="24dp"
+    android:background="#F5F1E7">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ADMIN DASHBOARD"
+        android:text="Admin Dashboard"
         android:textSize="28sp"
         android:textStyle="bold"
-        android:textColor="@color/green"
+        android:fontFamily="serif"
+        android:textColor="#183E33"
         android:layout_marginBottom="30dp" />
 
     <Button
         android:id="@+id/adminlogout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="LOG OUT"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/green" />
+        android:text="Log out"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#183E33" />
 
 </LinearLayout>

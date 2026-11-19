@@ -1,27 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
     android:padding="24dp"
-    android:background="@color/white"
+    android:background="#F5F1E7"
     tools:context=".RegisterActivity">
-
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="REGISTER PAGE"
-        android:textSize="28sp"
+        android:text="Novella"
+        android:textSize="40sp"
+        android:fontFamily="serif"
         android:textStyle="bold"
-        android:textColor="@color/green"
+        android:textColor="#183E33"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stories worth keeping."
+        android:textSize="16sp"
+        android:textColor="#183E33"
+        android:layout_marginBottom="40dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create your account"
+        android:textSize="26sp"
+        android:fontFamily="serif"
+        android:textStyle="bold"
+        android:textColor="#183E33"
         android:layout_marginBottom="24dp" />
-
-
 
     <EditText
         android:id="@+id/emailregister"
@@ -29,6 +44,9 @@
         android:layout_height="wrap_content"
         android:hint="Enter your email"
         android:inputType="textEmailAddress"
+        android:textColor="#183E33"
+        android:textColorHint="#888888"
+        android:backgroundTint="#183E33"
         android:padding="12dp"
         android:layout_marginBottom="16dp" />
 
@@ -38,9 +56,11 @@
         android:layout_height="wrap_content"
         android:hint="Enter your password"
         android:inputType="textPassword"
+        android:textColor="#183E33"
+        android:textColorHint="#888888"
+        android:backgroundTint="#183E33"
         android:padding="12dp"
-        android:layout_marginBottom="24dp" />
-
+        android:layout_marginBottom="16dp" />
 
     <EditText
         android:id="@+id/confirmpasswordregister"
@@ -48,17 +68,20 @@
         android:layout_height="wrap_content"
         android:hint="Confirm your password"
         android:inputType="textPassword"
+        android:textColor="#183E33"
+        android:textColorHint="#888888"
+        android:backgroundTint="#183E33"
         android:padding="12dp"
         android:layout_marginBottom="24dp" />
-
 
     <Button
         android:id="@+id/registerbtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="REGISTER"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/green"
+        android:text="Register"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#183E33"
         android:paddingVertical="12dp"
         android:textStyle="bold"
         android:layout_marginBottom="16dp" />
@@ -68,11 +91,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Already have an account? Login"
-        android:textColor="@color/green"
-        android:backgroundTint="@color/white"
+        android:textAllCaps="false"
+        android:textColor="#183E33"
+        android:backgroundTint="#F5F1E7"
         android:paddingVertical="12dp"
-        android:textStyle="bold"
-        android:layout_marginBottom="16dp"
-        />
+        android:textStyle="bold" />
 
 </LinearLayout>
