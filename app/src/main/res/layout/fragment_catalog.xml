@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F5F1E7"
+    android:padding="12dp">
+
+    <SearchView
+        android:id="@+id/searchBooks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:queryHint="Search by title or author"
+        android:iconifiedByDefault="false"
+        android:background="#FFFFFF"/>
+
+    <Spinner
+        android:id="@+id/spinnerGenre"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:background="#183E33"
+        android:popupBackground="#F5F1E7"
+        android:spinnerMode="dropdown"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="All books"
+        android:textSize="22sp"
+        android:fontFamily="serif"
+        android:textStyle="bold"
+        android:textColor="#183E33"
+        android:layout_marginBottom="8dp"/>
+
+    <ListView
+        android:id="@+id/listViewBooks"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="#DDD8CB"
+        android:dividerHeight="1dp"/>
+
+</LinearLayout>

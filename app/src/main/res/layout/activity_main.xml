@@ -1,52 +1,226 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
-    android:padding="24dp"
-    android:background="@color/white"
-    tools:context=".MainActivity">
+    android:background="#F5F1E7"
+    android:fitsSystemWindows="true">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Welcome"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:textColor="@color/green"
-        android:layout_marginBottom="24dp" />
-
-    <TextView
-        android:id="@+id/showEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:layout_marginBottom="30dp"
-        android:textColor="@color/green" />
-
-    <Button
-        android:id="@+id/signout"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="signout"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/green"
-        android:paddingVertical="12dp"
-        android:textStyle="bold"
-        android:layout_marginBottom="16dp" />
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="12dp">
 
-    <Button
-        android:id="@+id/delete"
+        <TextView
+            android:id="@+id/pageTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Novella"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:fontFamily="serif"
+            android:textColor="#183E33"/>
+
+        <Button
+            android:id="@+id/btnCart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cart"
+            android:backgroundTint="#183E33"
+            android:textColor="#FFFFFF"/>
+
+    </LinearLayout>
+
+    <!-- Main content -->
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="DELETE THE ACCOUNT"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/red"
-        android:paddingVertical="12dp"
-        android:textStyle="bold"
-        android:layout_marginBottom="16dp" />
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <!-- Home screen -->
+        <LinearLayout
+            android:id="@+id/homeSection"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Welcome to Novella"
+                android:textSize="28sp"
+                android:fontFamily="serif"
+                android:textStyle="bold"
+                android:textColor="#183E33"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Stories worth keeping."
+                android:textSize="16sp"
+                android:textColor="#183E33"
+                android:layout_marginBottom="24dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:background="#183E33"
+                android:text="Timeless stories,\nbeautifully told."
+                android:textSize="26sp"
+                android:fontFamily="serif"
+                android:textColor="#FFFFFF"
+                android:gravity="center"/>
+
+            <Button
+                android:id="@+id/btnExplore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Explore Books"
+                android:backgroundTint="#183E33"
+                android:textColor="#FFFFFF"
+                android:layout_marginTop="16dp"/>
+
+        </LinearLayout>
+
+        <!-- Fragment section -->
+        <FrameLayout
+            android:id="@+id/fragmentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
+
+        <!-- Profile screen -->
+        <LinearLayout
+            android:id="@+id/profileSection"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="My Profile"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:textColor="#183E33"/>
+
+            <TextView
+                android:id="@+id/showEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="#183E33"
+                android:layout_marginBottom="24dp"/>
+
+            <Button
+                android:id="@+id/btnLibrary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="My Library"/>
+
+            <Button
+                android:id="@+id/btnPurchaseHistory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Purchase History"/>
+
+            <Button
+                android:id="@+id/btnEditProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Edit Profile"/>
+
+            <Button
+                android:id="@+id/btnChangePassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Change Password"/>
+
+            <Button
+                android:id="@+id/signout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sign out"
+                android:backgroundTint="#183E33"
+                android:textColor="#FFFFFF"/>
+
+            <Button
+                android:id="@+id/delete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Delete Account"
+                android:backgroundTint="@color/red"
+                android:textColor="#FFFFFF"/>
+
+        </LinearLayout>
+
+        <!-- Temporary section -->
+        <TextView
+            android:id="@+id/temporarySection"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textColor="#183E33"
+            android:visibility="gone"/>
+
+    </FrameLayout>
+
+    <!-- Bottom navigation -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:orientation="horizontal"
+        android:background="#FFFFFF"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btnHome"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Home"
+            android:textAllCaps="false"
+            android:textColor="#183E33"/>
+
+        <Button
+            android:id="@+id/btnCatalog"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Browse"
+            android:textAllCaps="false"
+            android:textColor="#183E33"/>
+
+        <Button
+            android:id="@+id/btnWishlist"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Wishlist"
+            android:textAllCaps="false"
+            android:textColor="#183E33"/>
+
+        <Button
+            android:id="@+id/btnProfile"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Profile"
+            android:textAllCaps="false"
+            android:textColor="#183E33"/>
+
+    </LinearLayout>
 
 </LinearLayout>
