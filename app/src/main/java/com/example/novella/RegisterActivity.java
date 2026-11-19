@@ -18,18 +18,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
     EditText emailEditText, passwordEditText, confirmPassEditText;
-    Button registerbtn, logRegbtn;
+    Button registerbtn, logInRegbtn;
 
     FirebaseAuth firebaseAuth;
-    FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,23 +37,19 @@ public class RegisterActivity extends AppCompatActivity {
         confirmPassEditText = findViewById(R.id.confirmpasswordregister);
 
         registerbtn = findViewById(R.id.registerbtn);
-        logRegbtn = findViewById(R.id.loginregbtn);
+        logInRegbtn = findViewById(R.id.loginregbtn);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
 
-        // Go to Login Page
-        logRegbtn.setOnClickListener(new View.OnClickListener() {
+        logInRegbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(
-                        RegisterActivity.this, LoginActivity.class);
+                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
 
-        // Register Button
         registerbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,100 +64,55 @@ public class RegisterActivity extends AppCompatActivity {
         String password = passwordEditText.getText().toString().trim();
         String confirmPassword = confirmPassEditText.getText().toString().trim();
 
-        // Validate empty fields
         if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)
                 || TextUtils.isEmpty(confirmPassword)) {
-
-            Toast.makeText(this, "Please fill all the fields",
-                    Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Validate email
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            emailEditText.setError("Invalid email");
+            emailEditText.setError("Not Valid Email");
             emailEditText.requestFocus();
             return;
         }
 
-        // Validate password length
         if (password.length() < 6) {
-            passwordEditText.setError(
-                    "Password must be at least 6 characters");
+            passwordEditText.setError("Password needs to be at least 6 characters");
             passwordEditText.requestFocus();
             return;
         }
 
-        // Confirm password
         if (!password.equals(confirmPassword)) {
             confirmPassEditText.setError("Passwords do not match");
             confirmPassEditText.requestFocus();
             return;
         }
 
-        registerbtn.setEnabled(false);
-
-        // Create account in Firebase Authentication
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-
                         if (task.isSuccessful()) {
-
-                            FirebaseUser user = firebaseAuth.getCurrentUser();
-
-                            if (user != null) {
-                                saveUserToFirestore(
-                                        user.getUid(), user.getEmail());
-                            } else {
-                                registerbtn.setEnabled(true);
-                            }
-
+                            Toast.makeText(RegisterActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                            finish();
                         } else {
-
-                            registerbtn.setEnabled(true);
-
-                            Toast.makeText(RegisterActivity.this,
-                                    "Register failed",
-                                    Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this, "Register failed", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
 
-    // Save user information in Cloud Firestore
-    private void saveUserToFirestore(String uid, String email) {
+    @Override
+    protected void onStart() {
+        super.onStart();
 
-        Map<String, Object> user = new HashMap<>();
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
-        user.put("email", email);
-        user.put("role", "customer");
-
-        db.collection("users").document(uid).set(user)
-                .addOnSuccessListener(unused -> {
-
-                    Toast.makeText(RegisterActivity.this,
-                            "Account created successfully",
-                            Toast.LENGTH_SHORT).show();
-
-                    Intent intent = new Intent(
-                            RegisterActivity.this, MainActivity.class);
-
-                    startActivity(intent);
-                    finish();
-
-                })
-                .addOnFailureListener(e -> {
-
-                    firebaseAuth.signOut();
-                    registerbtn.setEnabled(true);
-
-                    Toast.makeText(RegisterActivity.this,
-                            "Account created, but profile could not be saved",
-                            Toast.LENGTH_LONG).show();
-
-                });
+        if (currentUser != null) {
+            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 }
