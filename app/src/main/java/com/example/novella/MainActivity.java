@@ -13,9 +13,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+
 public class MainActivity extends AppCompatActivity {
 
-    TextView email, pageTitle, temporarySection;
+    TextView email, showName, pageTitle, temporarySection;
 
     View homeSection, profileSection, fragmentContainer;
 
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         email = findViewById(R.id.showEmail);
+        showName = findViewById(R.id.showName);
         pageTitle = findViewById(R.id.pageTitle);
 
         homeSection = findViewById(R.id.homeSection);
@@ -59,6 +61,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         email.setText(currentUser.getEmail());
+        if (currentUser.getDisplayName() != null) {
+            showName.setText(currentUser.getDisplayName());
+        }
 
         // Home
         btnHome.setOnClickListener(v -> showHome());
@@ -87,11 +92,6 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btnPurchaseHistory).setOnClickListener(v ->
                 showMessage("Purchase History - Coming soon"));
 
-        findViewById(R.id.btnEditProfile).setOnClickListener(v ->
-                showMessage("Edit Profile - Coming soon"));
-
-        findViewById(R.id.btnChangePassword).setOnClickListener(v ->
-                showMessage("Change Password - Coming soon"));
 
         // Sign out
         signout.setOnClickListener(v -> {
@@ -213,10 +213,26 @@ public class MainActivity extends AppCompatActivity {
                 Toast.LENGTH_SHORT).show();
     }
 
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putString("screen",
                 pageTitle.getText().toString());
         super.onSaveInstanceState(outState);
+    }
+
+    // Update profile name
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+
+        if (user != null && showName != null) {
+            String name = user.getDisplayName();
+
+            showName.setText(name == null || name.isEmpty()
+                    ? "Customer" : name);
+        }
     }
 }
