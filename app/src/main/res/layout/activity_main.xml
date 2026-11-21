@@ -112,6 +112,18 @@
                 android:textColor="#183E33"/>
 
             <TextView
+                android:id="@+id/showName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Customer"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#183E33"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="8dp"/>
+
+
+            <TextView
                 android:id="@+id/showEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -19,6 +19,8 @@ import androidx.fragment.app.Fragment;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import com.google.firebase.storage.FirebaseStorage;
+
 public class CatalogFragment extends Fragment {
 
     ListView listViewBooks;
@@ -55,6 +57,27 @@ public class CatalogFragment extends Fragment {
 
         adapter = new BookAdapter(requireContext(), filteredBooks);
         listViewBooks.setAdapter(adapter);
+        listViewBooks.setOnItemClickListener(
+                (parent, itemView, position, id) -> {
+
+                    Book book = filteredBooks.get(position);
+
+                    android.content.Intent intent =
+                            new android.content.Intent(
+                                    requireContext(),
+                                    BookDetailsActivity.class);
+
+                    intent.putExtra("title", book.getTitle());
+                    intent.putExtra("author", book.getAuthor());
+                    intent.putExtra("description", book.getDescription());
+                    intent.putExtra("genre", book.getGenre());
+                    intent.putExtra("price", book.getPrice());
+                    intent.putExtra("coverUrl", book.getCoverUrl());
+
+                    startActivity(intent);
+                });
+
+        loadCovers();
 
         // Book genres
         String[] genres = {
@@ -167,14 +190,14 @@ public class CatalogFragment extends Fragment {
                 "1",
                 "The Little Prince",
                 "Antoine de Saint-Exupery",
-                "A story about love and friendship.",
+                "A young prince travels across the universe, discovering the meaning of love, friendship, and the things that truly matter in life.",
                 "Fantasy",
                 15.00, "", "", true
         ));
 
         booksList.add(new Book(
                 "2",
-                "Pride and Prejudice",
+                "Elizabeth Bennet challenges society's expectations while navigating love, pride, and misunderstandings in this timeless romantic classic.",
                 "Jane Austen",
                 "A classic romantic novel.",
                 "Romance",
@@ -185,7 +208,7 @@ public class CatalogFragment extends Fragment {
                 "3",
                 "Little Women",
                 "Louisa May Alcott",
-                "The story of four sisters.",
+                "Follow the four March sisters as they navigate love, family, ambition, and the challenges of growing up during the American Civil War.",
                 "Fiction",
                 12.00, "", "", true
         ));
@@ -194,7 +217,7 @@ public class CatalogFragment extends Fragment {
                 "4",
                 "Frankenstein",
                 "Mary Shelley",
-                "A story about science and creation.",
+                "A brilliant scientist creates life, but his ambition unleashes a tragedy that explores loneliness, responsibility, and the consequences of playing God.",
                 "Horror",
                 13.00, "", "", true
         ));
@@ -203,10 +226,38 @@ public class CatalogFragment extends Fragment {
                 "5",
                 "The Time Machine",
                 "H. G. Wells",
-                "A journey through time.",
+                "A daring inventor journeys thousands of years into the future, discovering a mysterious world where humanity has evolved in unexpected ways.",
                 "Science Fiction",
                 11.00, "", "", true
         ));
+    }
+
+    // Load book covers from Firebase Storage
+    private void loadCovers() {
+
+        String[] fileNames = {
+                "The Little Prince.jpg",
+                "pride_and_prejudice.jpg",
+                "1868 Little Women.jpg",
+                "Frankenstein.jpg",
+                "The Time Machine.jpg"
+        };
+
+        for (int i = 0; i < booksList.size(); i++) {
+
+            Book book = booksList.get(i);
+
+            FirebaseStorage.getInstance()
+                    .getReference("book-covers")
+                    .child(fileNames[i])
+                    .getDownloadUrl()
+                    .addOnSuccessListener(uri -> {
+
+                        book.setCoverUrl(uri.toString());
+                        adapter.notifyDataSetChanged();
+
+                    });
+        }
     }
 
     // Search and filter books
