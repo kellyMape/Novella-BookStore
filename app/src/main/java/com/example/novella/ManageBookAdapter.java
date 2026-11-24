@@ -64,7 +64,7 @@ public class ManageBookAdapter extends BaseAdapter {
         titleText.setText(b.getTitle());
         authorText.setText(b.getAuthor());
         genreText.setText(b.getGenre());
-        priceText.setText(b.getGenre());
+        priceText.setText("$" + b.getPrice());
 
         if (b.getCoverUrl() != null && !b.getCoverUrl().isEmpty()) {
             new ImageLoadTask(b.getCoverUrl(), imageView).execute();
@@ -87,6 +87,7 @@ public class ManageBookAdapter extends BaseAdapter {
                 intent.putExtra("bookRecommended", b.isRecommended());
                 intent.putExtra("bookAvailable", b.getIsAvailable());
                 context.startActivity(intent);
+
 
             }
         });
