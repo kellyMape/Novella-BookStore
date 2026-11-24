@@ -64,7 +64,7 @@ public class ManageBookAdapter extends BaseAdapter {
         titleText.setText(b.getTitle());
         authorText.setText(b.getAuthor());
         genreText.setText(b.getGenre());
-        priceText.setText("$" + b.getPrice());
+        priceText.setText(String.format("$%.2f", b.getPrice()));
 
         if (b.getCoverUrl() != null && !b.getCoverUrl().isEmpty()) {
             new ImageLoadTask(b.getCoverUrl(), imageView).execute();

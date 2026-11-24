@@ -25,7 +25,8 @@ public class LoginActivity extends AppCompatActivity {
 
     FirebaseAuth firebaseAuth;
 
-    String adminUID = "UID_DEL_ADMIN";
+    String adminUID1 = "wIj8z1GIXLWucY6rPIXcpBFk6Dz2";
+    String adminUID2 = "hLcpaNrsnQhB3dtrLm4gnMXDBVE2";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if (currentUser != null) {
 
-            if (currentUser.getUid().equals(adminUID)) {
+            if (currentUser.getUid().equals(adminUID1) || currentUser.getUid().equals(adminUID2)) {
                 startActivity(new Intent(LoginActivity.this, AdminActivity.class));
             } else {
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
