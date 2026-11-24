@@ -78,7 +78,7 @@ public class EditBookActivity extends AppCompatActivity {
         bookId = intent.getStringExtra("bookId");
         edtTitle.setText(intent.getStringExtra("bookTitle"));
         edtAuthor.setText(intent.getStringExtra("bookAuthor"));
-        edtDescription.setText(intent.getStringExtra("booDescription"));
+        edtDescription.setText(intent.getStringExtra("bookDescription"));
         edtPrice.setText(String.valueOf(intent.getDoubleExtra("bookPrice", 0.0)));
         checkRecommend.setChecked(intent.getBooleanExtra("bookRecommended", false));
         checkAvailable.setChecked(intent.getBooleanExtra("bookAvailable", true));

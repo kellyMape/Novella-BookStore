@@ -80,11 +80,11 @@ public class ManageBookAdapter extends BaseAdapter {
                 intent.putExtra("bookId", b.getId());
                 intent.putExtra("bookTitle", b.getTitle());
                 intent.putExtra("bookAuthor", b.getAuthor());
-                intent.putExtra("bokGenre", b.getGenre());
-                intent.putExtra("booDescription", b.getDescription());
+                intent.putExtra("bookGenre", b.getGenre());
+                intent.putExtra("bookDescription", b.getDescription());
                 intent.putExtra("bookPrice", b.getPrice());
-                intent.putExtra("booCoverUrl", b.getCoverUrl());
-                intent.putExtra("bookrecommended", b.isRecommended());
+                intent.putExtra("bookCoverUrl", b.getCoverUrl());
+                intent.putExtra("bookRecommended", b.isRecommended());
                 intent.putExtra("bookAvailable", b.isAvailable());
                 context.startActivity(intent);
 
