@@ -91,6 +91,10 @@ public class MainActivity extends AppCompatActivity {
 
         findViewById(R.id.btnPurchaseHistory).setOnClickListener(v ->
                 showMessage("Purchase History - Coming soon"));
+        // Open Edit Profile screen
+        findViewById(R.id.btnEditProfile).setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, EditProfileActivity.class)));
+
 
 
         // Sign out
