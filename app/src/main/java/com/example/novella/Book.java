@@ -1,21 +1,32 @@
 package com.example.novella;
 
-import com.google.firebase.database.PropertyName;
-
 public class Book {
 
     private String id;
     private String title;
     private String author;
-    private String genre;
     private String description;
+    private String genre;
     private double price;
     private String coverUrl;
-    private boolean recommended;
+    private String fileUrl;
     private boolean isAvailable;
+    private boolean recommended;
 
-    public Book() {
-        // Firebase necesita el constructor vacío
+    public Book() { }
+
+    public Book(String id, String title, String author,
+                String description, String genre, double price,
+                String coverUrl, String fileUrl, boolean isAvailable) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.description = description;
+        this.genre = genre;
+        this.price = price;
+        this.coverUrl = coverUrl;
+        this.fileUrl = fileUrl;
+        this.isAvailable = isAvailable;
     }
 
     public Book(String id, String title, String author, String genre,
@@ -41,11 +52,11 @@ public class Book {
     public String getAuthor() { return author; }
     public void setAuthor(String author) { this.author = author; }
 
-    public String getGenre() { return genre; }
-    public void setGenre(String genre) { this.genre = genre; }
-
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
+
+    public String getGenre() { return genre; }
+    public void setGenre(String genre) { this.genre = genre; }
 
     public double getPrice() { return price; }
     public void setPrice(double price) { this.price = price; }
@@ -53,12 +64,12 @@ public class Book {
     public String getCoverUrl() { return coverUrl; }
     public void setCoverUrl(String coverUrl) { this.coverUrl = coverUrl; }
 
+    public String getFileUrl() { return fileUrl; }
+    public void setFileUrl(String fileUrl) { this.fileUrl = fileUrl; }
+
+    public boolean getIsAvailable() { return isAvailable; }
+    public void setIsAvailable(boolean isAvailable) { this.isAvailable = isAvailable; }
+
     public boolean isRecommended() { return recommended; }
     public void setRecommended(boolean recommended) { this.recommended = recommended; }
-
-    @PropertyName("isAvailable")
-    public boolean isAvailable() { return isAvailable; }
-
-    @PropertyName("isAvailable")
-    public void setAvailable(boolean available) { this.isAvailable = available; }
 }

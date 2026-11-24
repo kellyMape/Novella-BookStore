@@ -5,6 +5,7 @@ plugins {
 
 android {
     namespace = "com.example.novella"
+
     compileSdk {
         version = release(37)
     }
@@ -26,6 +27,7 @@ android {
             }
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -39,6 +41,7 @@ dependencies {
     implementation(libs.credentials)
     implementation(libs.credentials.play.services.auth)
     implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
     implementation(libs.firebase.database)
     implementation(libs.firebase.storage)
     implementation(libs.googleid)

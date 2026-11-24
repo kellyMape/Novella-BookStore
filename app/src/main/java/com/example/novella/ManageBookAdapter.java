@@ -85,7 +85,7 @@ public class ManageBookAdapter extends BaseAdapter {
                 intent.putExtra("bookPrice", b.getPrice());
                 intent.putExtra("bookCoverUrl", b.getCoverUrl());
                 intent.putExtra("bookRecommended", b.isRecommended());
-                intent.putExtra("bookAvailable", b.isAvailable());
+                intent.putExtra("bookAvailable", b.getIsAvailable());
                 context.startActivity(intent);
 
             }
