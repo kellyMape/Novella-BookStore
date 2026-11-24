@@ -38,6 +38,19 @@
         android:textColor="#183E33"
         android:layout_marginBottom="24dp" />
 
+
+    <EditText
+        android:id="@+id/nameregister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="First and last name"
+        android:inputType="textPersonName"
+        android:textColor="#183E33"
+        android:textColorHint="#888888"
+        android:backgroundTint="#183E33"
+        android:padding="12dp"
+        android:layout_marginBottom="16dp" />
+
     <EditText
         android:id="@+id/emailregister"
         android:layout_width="match_parent"

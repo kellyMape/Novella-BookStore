@@ -18,10 +18,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    EditText emailEditText, passwordEditText, confirmPassEditText;
+    EditText nameEditText, emailEditText, passwordEditText, confirmPassEditText;
     Button registerbtn, logInRegbtn;
 
     FirebaseAuth firebaseAuth;
@@ -32,6 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_register);
 
+        nameEditText = findViewById(R.id.nameregister);
         emailEditText = findViewById(R.id.emailregister);
         passwordEditText = findViewById(R.id.passwordregister);
         confirmPassEditText = findViewById(R.id.confirmpasswordregister);
@@ -41,6 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
+        // Go to Login
         logInRegbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,6 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        // Register a new user
         registerbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,44 +64,86 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void registerUser() {
 
+        // Get user information
+        String name = nameEditText.getText().toString().trim();
         String email = emailEditText.getText().toString().trim();
-        String password = passwordEditText.getText().toString().trim();
-        String confirmPassword = confirmPassEditText.getText().toString().trim();
+        String password = passwordEditText.getText().toString();
+        String confirmPassword = confirmPassEditText.getText().toString();
 
-        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)
+        // Check empty fields
+        if (TextUtils.isEmpty(name) || TextUtils.isEmpty(email)
+                || TextUtils.isEmpty(password)
                 || TextUtils.isEmpty(confirmPassword)) {
             Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        // Validate email
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             emailEditText.setError("Not Valid Email");
             emailEditText.requestFocus();
             return;
         }
 
+        // Validate password
         if (password.length() < 6) {
             passwordEditText.setError("Password needs to be at least 6 characters");
             passwordEditText.requestFocus();
             return;
         }
 
+        // Confirm password
         if (!password.equals(confirmPassword)) {
             confirmPassEditText.setError("Passwords do not match");
             confirmPassEditText.requestFocus();
             return;
         }
 
+        // Create account in Firebase Authentication
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+
                         if (task.isSuccessful()) {
-                            Toast.makeText(RegisterActivity.this, "Success", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(RegisterActivity.this, MainActivity.class));
-                            finish();
+
+                            FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                            if (user != null) {
+
+                                // Save full name in Firebase Authentication
+                                UserProfileChangeRequest profileUpdates =
+                                        new UserProfileChangeRequest.Builder()
+                                                .setDisplayName(name)
+                                                .build();
+
+                                user.updateProfile(profileUpdates)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> profileTask) {
+
+                                                if (profileTask.isSuccessful()) {
+                                                    Toast.makeText(RegisterActivity.this,
+                                                            "Account created successfully",
+                                                            Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                    Toast.makeText(RegisterActivity.this,
+                                                            "Account created, but name could not be saved",
+                                                            Toast.LENGTH_LONG).show();
+                                                }
+
+                                                // Open MainActivity
+                                                startActivity(new Intent(RegisterActivity.this,
+                                                        MainActivity.class));
+                                                finish();
+                                            }
+                                        });
+                            }
+
                         } else {
-                            Toast.makeText(RegisterActivity.this, "Register failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this,
+                                    "Register failed",
+                                    Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -110,7 +156,7 @@ public class RegisterActivity extends AppCompatActivity {
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
         if (currentUser != null) {
-            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
         }

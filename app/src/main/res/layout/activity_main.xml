@@ -104,14 +104,6 @@
             android:visibility="gone">
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="My Profile"
-                android:textSize="28sp"
-                android:textStyle="bold"
-                android:textColor="#183E33"/>
-
-            <TextView
                 android:id="@+id/showName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -135,25 +127,31 @@
                 android:id="@+id/btnLibrary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="My Library"/>
+                android:text="My Library"
+                android:textAllCaps="false"
+                android:backgroundTint="#183E33"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="10dp"/>
 
             <Button
                 android:id="@+id/btnPurchaseHistory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Purchase History"/>
+                android:text="Purchase History"
+                android:textAllCaps="false"
+                android:backgroundTint="#183E33"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="10dp"/>
 
             <Button
                 android:id="@+id/btnEditProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Edit Profile"/>
-
-            <Button
-                android:id="@+id/btnChangePassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Change Password"/>
+                android:text="Edit Profile"
+                android:textAllCaps="false"
+                android:backgroundTint="#183E33"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="10dp"/>
 
             <Button
                 android:id="@+id/signout"
