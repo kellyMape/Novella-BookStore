@@ -40,7 +40,7 @@ public class AddBookActivity extends AppCompatActivity {
 
     Uri coverUri;
 
-    String[] genres = {"Romance", "Mistery", "Horror", "Fantasy", "Science Fiction", "Classics"};
+    String[] genres = {"Romance", "Mystery", "Horror", "Fantasy", "Science Fiction", "Classics"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

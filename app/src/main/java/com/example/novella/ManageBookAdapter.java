@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.content.Intent;
+import android.widget.Button;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -64,6 +66,25 @@ public class ManageBookAdapter extends BaseAdapter {
         } else {
             imageView.setImageResource(android.R.drawable.ic_menu_report_image);
         }
+        Button btnEdit = convertView.findViewById(R.id.btnEditBook);
+
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, EditBookActivity.class);
+                intent.putExtra("bookId", b.getId());
+                intent.putExtra("bookTitle", b.getTitle());
+                intent.putExtra("bookAuthor", b.getAuthor());
+                intent.putExtra("bokGenre", b.getGenre());
+                intent.putExtra("booDescription", b.getDescription());
+                intent.putExtra("bookPrice", b.getPrice());
+                intent.putExtra("booCoverUrl", b.getCoverUrl());
+                intent.putExtra("bookrecommended", b.isRecommended());
+                intent.putExtra("bookAvailable", b.isAvailable());
+                context.startActivity(intent);
+
+            }
+        });
         return convertView;
     }
 
