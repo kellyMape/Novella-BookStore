@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.content.Intent;
 import android.widget.Button;
 
@@ -17,6 +18,10 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class ManageBookAdapter extends BaseAdapter {
 
@@ -85,7 +90,32 @@ public class ManageBookAdapter extends BaseAdapter {
 
             }
         });
+
+        Button btnDelete = convertView.findViewById(R.id.btnDeleteBook);
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // delete the cover from Storage first
+                if (b.getCoverUrl() != null && !b.getCoverUrl().isEmpty()) {
+                    StorageReference imgRef = FirebaseStorage.getInstance().getReferenceFromUrl(b.getCoverUrl());
+                    imgRef.delete().addOnSuccessListener(aVoid -> {
+                        deleteBookRecord(b.getId());
+                    }).addOnFailureListener(e -> Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show());
+                } else {
+                    deleteBookRecord(b.getId());
+                }
+            }
+        });
         return convertView;
+    }
+
+    private void deleteBookRecord(String bookId) {
+        FirebaseDatabase.getInstance().getReference("books")
+                .child(bookId)
+                .removeValue()
+                .addOnSuccessListener(aVoid -> Toast.makeText(context, "Book deleted", Toast.LENGTH_SHORT).show())
+                .addOnFailureListener(e -> Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show());
     }
 
     private static class ImageLoadTask extends AsyncTask<Void, Void, Bitmap>{
