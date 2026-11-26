@@ -1,5 +1,6 @@
 package com.example.novella;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -153,6 +154,18 @@ public class BookDetailsActivity extends AppCompatActivity {
                             Toast.makeText(this,
                                     "Error: " + e.getMessage(),
                                     Toast.LENGTH_LONG).show());
+        });
+
+        // Open Ratings & Comments
+        Button btnRatings = findViewById(R.id.btnRatings);
+        btnRatings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BookDetailsActivity.this, ReviewsActivity.class);
+                intent.putExtra("bookId", bookId);
+                intent.putExtra("bookTitle", title);
+                startActivity(intent);
+            }
         });
     }
 

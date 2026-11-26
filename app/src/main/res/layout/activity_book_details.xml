@@ -123,6 +123,16 @@
                 android:lineSpacingExtra="4dp"
                 android:layout_marginBottom="20dp" />
 
+            <Button
+                android:id="@+id/btnRatings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="★ Ratings &amp; Comments"
+                android:textAllCaps="false"
+                android:textColor="#183E33"
+                android:backgroundTint="#CFBA94"
+                android:layout_marginBottom="20dp"/>
+
         </LinearLayout>
 
     </ScrollView>

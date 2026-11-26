@@ -54,14 +54,23 @@ public class ReviewsActivity extends AppCompatActivity {
         btnSubmitReview = findViewById(R.id.btnSubmitReview);
         listViewReviews = findViewById(R.id.listViewReviews);
 
+        // Back button
+        findViewById(R.id.btnBackReviews).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         //get book
         bookId = getIntent().getStringExtra("bookId");
         bookTitle = getIntent().getStringExtra("bookTitle");
 
-        // TEMPORARY: only for testing (Alice)
+        // If no book was sent, close the screen
         if (bookId == null) {
-            bookId = "-P756oMm34Y0sbEJmD4_";
-            bookTitle = "Alice's Adventures in Wonderland";
+            Toast.makeText(this, "Book not found", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
         }
 
         txtReviewBookTitle.setText(bookTitle);
@@ -74,7 +83,7 @@ public class ReviewsActivity extends AppCompatActivity {
         //list de review
         reviewsList = new ArrayList<>();
         reviewsAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, reviewsList);
+                R.layout.item_review, reviewsList);
         listViewReviews.setAdapter(reviewsAdapter);
 
         reviewsReference = FirebaseDatabase.getInstance()

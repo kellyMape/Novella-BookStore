@@ -219,6 +219,8 @@
             android:layout_weight="1"
             android:text="Wishlist"
             android:textAllCaps="false"
+            android:maxLines="1"
+            android:textSize="13sp"
             android:textColor="#183E33"/>
 
         <Button
