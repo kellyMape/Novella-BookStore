@@ -56,7 +56,7 @@
         <activity
             android:name=".ReviewsActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".RecommendedActivity"
             android:exported="false" />
@@ -66,6 +66,10 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".CartActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".PurchaseHistoryActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
     </application>
