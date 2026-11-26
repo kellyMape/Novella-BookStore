@@ -80,7 +80,7 @@
                 android:id="@+id/btnExplore"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Explore Books"
+                android:text="Recommended Books"
                 android:backgroundTint="#183E33"
                 android:textColor="#FFFFFF"
                 android:layout_marginTop="16dp"/>
