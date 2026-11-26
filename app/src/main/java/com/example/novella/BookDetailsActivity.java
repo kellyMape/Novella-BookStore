@@ -17,6 +17,11 @@ import java.net.URL;
 import java.util.Locale;
 import android.view.View;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class BookDetailsActivity extends AppCompatActivity {
 
     // Book details
@@ -53,6 +58,8 @@ public class BookDetailsActivity extends AppCompatActivity {
         btnAddToCart = findViewById(R.id.btnAddToCart);
 
         // Get selected book information
+        // Get the book ID from Firebase
+        String bookId = getIntent().getStringExtra("bookId");
         String title = getIntent().getStringExtra("title");
         String author = getIntent().getStringExtra("author");
         String genre = getIntent().getStringExtra("genre");
@@ -74,15 +81,79 @@ public class BookDetailsActivity extends AppCompatActivity {
             imageViewBookCoverDetail.setImageResource(android.R.drawable.ic_menu_report_image);
         }
 
-        // Wishlist button (temporary)
-        btnSaveBook.setOnClickListener(v ->
-                Toast.makeText(this, "Added to wishlist", Toast.LENGTH_SHORT).show()
-        );
 
-        // Add to cart button (temporary)
-        btnAddToCart.setOnClickListener(v ->
-                Toast.makeText(this, "Added to cart", Toast.LENGTH_SHORT).show()
-        );
+        // Save book to Wishlist
+        btnSaveBook.setOnClickListener(v -> {
+
+            FirebaseUser user = FirebaseAuth.getInstance()
+                    .getCurrentUser();
+
+            if (user == null) {
+                Toast.makeText(this, "Please log in first",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (bookId == null || bookId.isEmpty()) {
+                Toast.makeText(this, "Book ID not found",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Save book ID in user's favorites
+            DatabaseReference favoriteRef =
+                    FirebaseDatabase.getInstance()
+                            .getReference("favorites")
+                            .child(user.getUid())
+                            .child(bookId);
+
+            favoriteRef.setValue(true)
+                    .addOnSuccessListener(unused ->
+                            Toast.makeText(this,
+                                    "Added to Wishlist!",
+                                    Toast.LENGTH_SHORT).show())
+                    .addOnFailureListener(e ->
+                            Toast.makeText(this,
+                                    "Error: " + e.getMessage(),
+                                    Toast.LENGTH_LONG).show());
+        });
+
+
+        // Add book to Shopping Cart
+        btnAddToCart.setOnClickListener(v -> {
+
+            FirebaseUser user = FirebaseAuth.getInstance()
+                    .getCurrentUser();
+
+            if (user == null) {
+                Toast.makeText(this, "Please log in first",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (bookId == null || bookId.isEmpty()) {
+                Toast.makeText(this, "Book ID not found",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Save book in user's cart
+            DatabaseReference cartRef =
+                    FirebaseDatabase.getInstance()
+                            .getReference("carts")
+                            .child(user.getUid())
+                            .child(bookId);
+
+            cartRef.child("quantity").setValue(1)
+                    .addOnSuccessListener(unused ->
+                            Toast.makeText(this,
+                                    "Added to Cart!",
+                                    Toast.LENGTH_SHORT).show())
+                    .addOnFailureListener(e ->
+                            Toast.makeText(this,
+                                    "Error: " + e.getMessage(),
+                                    Toast.LENGTH_LONG).show());
+        });
     }
 
     // Download book cover image

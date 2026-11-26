@@ -19,7 +19,12 @@ import androidx.fragment.app.Fragment;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import android.widget.Toast;
 
 public class CatalogFragment extends Fragment {
 
@@ -51,9 +56,7 @@ public class CatalogFragment extends Fragment {
         booksList = new ArrayList<>();
         filteredBooks = new ArrayList<>();
 
-        loadBooks();
 
-        filteredBooks.addAll(booksList);
 
         adapter = new BookAdapter(requireContext(), filteredBooks);
         listViewBooks.setAdapter(adapter);
@@ -66,7 +69,7 @@ public class CatalogFragment extends Fragment {
                             new android.content.Intent(
                                     requireContext(),
                                     BookDetailsActivity.class);
-
+                    intent.putExtra("bookId", book.getId());
                     intent.putExtra("title", book.getTitle());
                     intent.putExtra("author", book.getAuthor());
                     intent.putExtra("description", book.getDescription());
@@ -77,7 +80,7 @@ public class CatalogFragment extends Fragment {
                     startActivity(intent);
                 });
 
-        loadCovers();
+
 
         // Book genres
         String[] genres = {
@@ -179,86 +182,61 @@ public class CatalogFragment extends Fragment {
                     public void onNothingSelected(AdapterView<?> parent) {
                     }
                 });
+        // Load the shared book catalog from Firebase
+        loadBooksFromFirebase();
 
         return view;
     }
 
-    // Temporary books
-    private void loadBooks() {
 
-        booksList.add(new Book(
-                "1",
-                "The Little Prince",
-                "Antoine de Saint-Exupery",
-                "A young prince travels across the universe, discovering the meaning of love, friendship, and the things that truly matter in life.",
-                "Fantasy",
-                15.00, "", "", true
-        ));
+    // Load books from Firebase Realtime Database
+    private void loadBooksFromFirebase() {
 
-        booksList.add(new Book(
-                "2",
-                "Elizabeth Bennet challenges society's expectations while navigating love, pride, and misunderstandings in this timeless romantic classic.",
-                "Jane Austen",
-                "A classic romantic novel.",
-                "Romance",
-                10.00, "", "", true
-        ));
+        DatabaseReference booksReference =
+                FirebaseDatabase.getInstance()
+                        .getReference("books");
 
-        booksList.add(new Book(
-                "3",
-                "Little Women",
-                "Louisa May Alcott",
-                "Follow the four March sisters as they navigate love, family, ambition, and the challenges of growing up during the American Civil War.",
-                "Fiction",
-                12.00, "", "", true
-        ));
+        booksReference.addValueEventListener(new ValueEventListener() {
 
-        booksList.add(new Book(
-                "4",
-                "Frankenstein",
-                "Mary Shelley",
-                "A brilliant scientist creates life, but his ambition unleashes a tragedy that explores loneliness, responsibility, and the consequences of playing God.",
-                "Horror",
-                13.00, "", "", true
-        ));
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-        booksList.add(new Book(
-                "5",
-                "The Time Machine",
-                "H. G. Wells",
-                "A daring inventor journeys thousands of years into the future, discovering a mysterious world where humanity has evolved in unexpected ways.",
-                "Science Fiction",
-                11.00, "", "", true
-        ));
+                booksList.clear();
+
+                // Read all books from Firebase
+                for (DataSnapshot bookSnapshot : snapshot.getChildren()) {
+
+                    Book book = bookSnapshot.getValue(Book.class);
+
+                    if (book != null) {
+
+                        // Save the real Firebase book ID
+                        book.setId(bookSnapshot.getKey());
+
+                        booksList.add(book);
+                    }
+                }
+
+                // Apply current search and genre filters
+                filterBooks();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+                if (getContext() != null) {
+                    Toast.makeText(
+                            requireContext(),
+                            "Error loading books: " + error.getMessage(),
+                            Toast.LENGTH_LONG
+                    ).show();
+                }
+            }
+        });
     }
 
-    // Load book covers from Firebase Storage
-    private void loadCovers() {
 
-        String[] fileNames = {
-                "The Little Prince.jpg",
-                "pride_and_prejudice.jpg",
-                "1868 Little Women.jpg",
-                "Frankenstein.jpg",
-                "The Time Machine.jpg"
-        };
 
-        for (int i = 0; i < booksList.size(); i++) {
-
-            Book book = booksList.get(i);
-
-            FirebaseStorage.getInstance()
-                    .getReference("book-covers")
-                    .child(fileNames[i])
-                    .getDownloadUrl()
-                    .addOnSuccessListener(uri -> {
-
-                        book.setCoverUrl(uri.toString());
-                        adapter.notifyDataSetChanged();
-
-                    });
-        }
-    }
 
     // Search and filter books
     private void filterBooks() {
