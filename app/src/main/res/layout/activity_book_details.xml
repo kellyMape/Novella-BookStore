@@ -1,95 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#F5F1E7"
     android:fitsSystemWindows="true">
 
+    <!-- Scrollable book information -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:fillViewport="true">
+        android:fillViewport="false"
+        android:scrollbars="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="24dp">
 
+            <!-- Back button -->
             <TextView
                 android:id="@+id/btnBackDetails"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:layout_marginBottom="12dp"
                 android:text="‹"
                 android:textSize="32sp"
                 android:textColor="#183E33"
                 android:gravity="center"
                 android:clickable="true"
                 android:focusable="true"
-                android:contentDescription="Back to catalog"/>
+                android:contentDescription="Back to catalog" />
 
+            <!-- Book cover -->
             <ImageView
                 android:id="@+id/imageViewBookCoverDetail"
-                android:layout_width="230dp"
-                android:layout_height="320dp"
+                android:layout_width="180dp"
+                android:layout_height="250dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="24dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="16dp"
                 android:scaleType="fitCenter"
                 android:contentDescription="Book cover"
                 android:src="@android:drawable/ic_menu_report_image" />
 
+            <!-- Book title -->
             <TextView
                 android:id="@+id/textViewDetailTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Book Title"
                 android:textColor="#183E33"
-                android:textSize="28sp"
+                android:textSize="26sp"
                 android:textStyle="bold"
                 android:gravity="center"
-                android:layout_marginBottom="8dp" />
+                android:layout_marginBottom="6dp" />
 
+            <!-- Author -->
             <TextView
                 android:id="@+id/textViewDetailAuthor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Author"
                 android:textColor="#526B5E"
-                android:textSize="17sp"
+                android:textSize="16sp"
                 android:gravity="center"
-                android:layout_marginBottom="12dp" />
+                android:layout_marginBottom="8dp" />
 
+            <!-- Genre -->
             <TextView
                 android:id="@+id/textViewDetailGenre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Genre"
                 android:textColor="#BD964F"
-                android:textSize="16sp"
+                android:textSize="15sp"
                 android:gravity="center"
-                android:layout_marginBottom="15dp" />
+                android:layout_marginBottom="10dp" />
 
+            <!-- Price -->
             <TextView
                 android:id="@+id/textViewDetailPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="$ 12.99"
                 android:textColor="#183E33"
-                android:textSize="25sp"
+                android:textSize="24sp"
                 android:textStyle="bold"
                 android:gravity="center"
-                android:layout_marginBottom="25dp" />
+                android:layout_marginBottom="18dp" />
 
+            <!-- Divider -->
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#D8D0BE"
-                android:layout_marginBottom="20dp" />
+                android:layout_marginBottom="16dp" />
 
+            <!-- Description title -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -99,6 +112,7 @@
                 android:textStyle="bold"
                 android:layout_marginBottom="10dp" />
 
+            <!-- Full book description -->
             <TextView
                 android:id="@+id/textViewDetailDescription"
                 android:layout_width="match_parent"
@@ -107,24 +121,25 @@
                 android:textColor="#183E33"
                 android:textSize="16sp"
                 android:lineSpacingExtra="4dp"
-                android:layout_marginBottom="30dp" />
+                android:layout_marginBottom="20dp" />
 
         </LinearLayout>
 
     </ScrollView>
 
+    <!-- Fixed bottom buttons -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:padding="16dp"
+        android:padding="12dp"
         android:background="#FFFFFF">
 
         <Button
             android:id="@+id/btnSaveBook"
             android:layout_width="0dp"
-            android:layout_height="56dp"
+            android:layout_height="52dp"
             android:layout_weight="1"
             android:layout_marginEnd="10dp"
             android:text="♡ Save"
@@ -136,7 +151,7 @@
         <Button
             android:id="@+id/btnAddToCart"
             android:layout_width="0dp"
-            android:layout_height="56dp"
+            android:layout_height="52dp"
             android:layout_weight="2"
             android:text="Add to Cart"
             android:textAllCaps="false"

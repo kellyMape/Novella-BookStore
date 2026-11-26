@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F5F1E7"
+    android:fitsSystemWindows="true"
+    android:padding="16dp">
+
+    <!-- Back button -->
+    <TextView
+        android:id="@+id/btnBackWishlist"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:text="← Back"
+        android:textColor="#183E33"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Page title -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="My Wishlist ♡"
+        android:textColor="#183E33"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Subtitle -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Your saved books"
+        android:textColor="#BD964F"
+        android:textSize="16sp"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Empty wishlist message -->
+    <TextView
+        android:id="@+id/textViewEmptyWishlist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No saved books yet."
+        android:textColor="#183E33"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:padding="20dp"
+        android:visibility="gone" />
+
+    <!-- Saved books list -->
+    <ListView
+        android:id="@+id/listViewWishlist"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="#D8D0BE"
+        android:dividerHeight="1dp" />
+
+</LinearLayout>

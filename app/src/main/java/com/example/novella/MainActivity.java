@@ -71,17 +71,25 @@ public class MainActivity extends AppCompatActivity {
         // Book Catalog
         btnCatalog.setOnClickListener(v -> showCatalog());
 
-        btnExplore.setOnClickListener(v -> showCatalog());
+        // Open Recommended Books screen
+        btnExplore.setOnClickListener(v ->
+                startActivity(new Intent(
+                        MainActivity.this,
+                        RecommendedActivity.class)));
 
-        // Wishlist
+        // Open saved books
         btnWishlist.setOnClickListener(v ->
-                showTemporary("My Wishlist",
-                        "No saved books yet."));
+                startActivity(new Intent(
+                        MainActivity.this,
+                        WishlistActivity.class)));
 
-        // Shopping Cart
+
+        // Open Shopping Cart
         btnCart.setOnClickListener(v ->
-                showTemporary("Shopping Cart",
-                        "Your cart is empty."));
+                startActivity(new Intent(
+                        MainActivity.this,
+                        CartActivity.class)));
+
 
         // Profile
         btnProfile.setOnClickListener(v -> showProfile());
