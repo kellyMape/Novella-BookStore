@@ -47,7 +47,8 @@ public class AdminActivity extends AppCompatActivity {
         btnOrders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(AdminActivity.this, "Coming soon", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent( AdminActivity.this, AdminOrdersActivity.class);
+                startActivity(intent);
             }
         });
 
