@@ -1,70 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="24dp"
-    android:background="#F5F1E7">
+    android:background="#F5F1E7"
+    android:fitsSystemWindows="true">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Admin Dashboard"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:fontFamily="serif"
-        android:textColor="#183E33"
-        android:layout_marginBottom="30dp" />
-
-    <Button
-        android:id="@+id/btnManageBooks"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Manage Books"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF"
-        android:backgroundTint="#183E33"
-        android:layout_marginBottom="12dp" />
+        android:orientation="vertical"
+        android:padding="24dp">
 
-    <Button
-        android:id="@+id/btnAddBook"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add Book"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF"
-        android:backgroundTint="#183E33"
-        android:layout_marginBottom="12dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Admin Dashboard"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:fontFamily="serif"
+            android:textColor="#183E33"
+            android:gravity="center"
+            android:layout_marginBottom="20dp" />
 
-    <Button
-        android:id="@+id/btnOrders"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Orders"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF"
-        android:backgroundTint="#183E33"
-        android:layout_marginBottom="12dp" />
+        <!-- Dark green box: 3 numbers -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="#183E33"
+            android:padding="16dp">
 
-    <Button
-        android:id="@+id/btnUsers"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Users"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF"
-        android:backgroundTint="#183E33"
-        android:layout_marginBottom="30dp" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+                <TextView
+                    android:id="@+id/txtRevenue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$0.00"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:fontFamily="serif"
+                    android:textColor="#FFFFFF" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Revenue"
+                    android:textColor="#CFBA94" />
+            </LinearLayout>
 
-    <Button
-        android:id="@+id/adminlogout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Log out"
-        android:textAllCaps="false"
-        android:textColor="#183E33"
-        android:backgroundTint="#CFBA94" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+                <TextView
+                    android:id="@+id/txtOrdersCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:fontFamily="serif"
+                    android:textColor="#FFFFFF" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Orders"
+                    android:textColor="#CFBA94" />
+            </LinearLayout>
 
-</LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+                <TextView
+                    android:id="@+id/txtBooksSold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:fontFamily="serif"
+                    android:textColor="#FFFFFF" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Books sold"
+                    android:textColor="#CFBA94" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- White card: sales by month -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sales by month"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:fontFamily="serif"
+            android:textColor="#183E33"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="6dp" />
+
+        <TextView
+            android:id="@+id/txtMonthlySales"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:padding="14dp"
+            android:text="No sales yet"
+            android:textColor="#183E33"
+            android:lineSpacingExtra="6dp" />
+
+        <!-- White card: best sellers -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Best sellers"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:fontFamily="serif"
+            android:textColor="#183E33"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="6dp" />
+
+        <TextView
+            android:id="@+id/txtBestSellers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:padding="14dp"
+            android:text="No sales yet"
+            android:textColor="#183E33"
+            android:lineSpacingExtra="6dp"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Buttons (same ids as before) -->
+        <Button
+            android:id="@+id/btnManageBooks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Manage Books"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#183E33"
+            android:layout_marginBottom="12dp" />
+
+        <Button
+            android:id="@+id/btnAddBook"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Book"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#183E33"
+            android:layout_marginBottom="12dp" />
+
+        <Button
+            android:id="@+id/btnOrders"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Orders"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#183E33"
+            android:layout_marginBottom="12dp" />
+
+        <Button
+            android:id="@+id/btnUsers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Users"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#183E33"
+            android:layout_marginBottom="30dp" />
+
+        <Button
+            android:id="@+id/adminlogout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Log out"
+            android:textAllCaps="false"
+            android:textColor="#183E33"
+            android:backgroundTint="#CFBA94" />
+
+    </LinearLayout>
+</ScrollView>

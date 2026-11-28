@@ -72,7 +72,7 @@ public class BookAdapter extends BaseAdapter {
         titleText.setText(b.getTitle());
         authorText.setText(b.getAuthor());
         descriptionText.setText(b.getDescription());
-        priceText.setText("$ " + b.getPrice());
+        priceText.setText(String.format("$%.2f", b.getPrice()));
 
         String coverUrl = b.getCoverUrl();  // Get book cover URL
 
