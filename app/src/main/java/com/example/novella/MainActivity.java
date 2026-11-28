@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         btnProfile.setOnClickListener(v -> showProfile());
 
         findViewById(R.id.btnLibrary).setOnClickListener(v ->
-                showMessage("My Library - Coming soon"));
+                startActivity(new Intent(MainActivity.this, MyLibraryActivity.class)));
 
         findViewById(R.id.btnPurchaseHistory).setOnClickListener(v ->
                 startActivity(new Intent(MainActivity.this, PurchaseHistoryActivity.class)));
