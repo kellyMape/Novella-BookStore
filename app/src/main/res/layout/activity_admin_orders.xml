@@ -41,7 +41,6 @@
             android:layout_marginEnd="48dp" />
     </LinearLayout>
 
-    <!-- Dark green summary box -->
     <TextView
         android:id="@+id/txtOrdersSummary"
         android:layout_width="match_parent"

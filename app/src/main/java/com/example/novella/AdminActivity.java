@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,7 +11,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class AdminActivity extends AppCompatActivity {
 
-    Button logoutbtn, btnManageBooks, btnAddBooks, btnOrders, btnUsers;
+    Button logoutbtn, btnManageBooks, btnAddBook, btnOrders, btnUsers;
     FirebaseAuth firebaseAuth;
 
     @Override
@@ -22,12 +21,13 @@ public class AdminActivity extends AppCompatActivity {
 
         logoutbtn = findViewById(R.id.adminlogout);
         btnManageBooks = findViewById(R.id.btnManageBooks);
-        btnAddBooks = findViewById(R.id.btnAddBook);
+        btnAddBook = findViewById(R.id.btnAddBook);
         btnOrders = findViewById(R.id.btnOrders);
         btnUsers = findViewById(R.id.btnUsers);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
+        // Open Manage Books
         btnManageBooks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -36,7 +36,8 @@ public class AdminActivity extends AppCompatActivity {
             }
         });
 
-        btnAddBooks.setOnClickListener(new View.OnClickListener() {
+        // Open Add Book
+        btnAddBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AdminActivity.this, AddBookActivity.class);
@@ -44,29 +45,28 @@ public class AdminActivity extends AppCompatActivity {
             }
         });
 
+        // Open Orders
         btnOrders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent( AdminActivity.this, AdminOrdersActivity.class);
+                Intent intent = new Intent(AdminActivity.this, AdminOrdersActivity.class);
                 startActivity(intent);
             }
         });
 
+        // Open Users
         btnUsers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(AdminActivity.this, "Coming soon", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(AdminActivity.this, AdminUsersActivity.class);
+                startActivity(intent);
             }
         });
 
+        // Log out
         logoutbtn.setOnClickListener(view -> {
-
             firebaseAuth.signOut();
-
-            Intent intent = new Intent(
-                    AdminActivity.this,
-                    LoginActivity.class);
-
+            Intent intent = new Intent(AdminActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();
         });
