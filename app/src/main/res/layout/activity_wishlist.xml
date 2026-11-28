@@ -8,30 +8,39 @@
     android:fitsSystemWindows="true"
     android:padding="16dp">
 
-    <!-- Back button -->
+    <!-- Heather: back button + title (same as the order screens) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="8dp">
+
     <TextView
         android:id="@+id/btnBackWishlist"
-        android:layout_width="wrap_content"
+        android:layout_width="48dp"
         android:layout_height="48dp"
-        android:text="← Back"
+        android:text="‹"
         android:textColor="#183E33"
-        android:textSize="16sp"
+        android:textSize="32sp"
         android:textStyle="bold"
-        android:gravity="center_vertical"
-        android:paddingHorizontal="8dp"
+        android:gravity="center"
         android:clickable="true"
-        android:focusable="true"
-        android:layout_marginBottom="8dp" />
+        android:focusable="true"/>
 
     <!-- Page title -->
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:text="My Wishlist ♡"
         android:textColor="#183E33"
-        android:textSize="26sp"
+        android:textSize="18sp"
         android:textStyle="bold"
-        android:layout_marginBottom="8dp" />
+        android:gravity="center"
+        android:layout_marginEnd="48dp" />
+
+    </LinearLayout>
 
     <!-- Subtitle -->
     <TextView
@@ -40,6 +49,7 @@
         android:text="Your saved books"
         android:textColor="#BD964F"
         android:textSize="16sp"
+        android:gravity="center"
         android:layout_marginBottom="16dp" />
 
     <!-- Empty wishlist message -->
